@@ -1,0 +1,4 @@
+# conteúdo combinado
+node_modules/
+.env
+dist/
