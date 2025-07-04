@@ -13,69 +13,100 @@ When('o usuário preenche todos os campos obrigatórios com {string}', (type) =>
     let email;
     let password;
     let repeatPassword;
+    let selectQuest = true
     switch (type) {
         case "e-mail, senha e confirmação de senha válidos e pergunta de segurança validos":
             email = faker.internet.email();
             password = validPassword;
-            repeatPassword = validPassword
-            securityQuest = faker.message();
-            Cadastro.fillRegisterForm(email, password, repeatPassword, securityQuest)
+            repeatPassword = password;
+            securityQuest = faker.lorem.words();
+            Cadastro.fillRegisterForm(email, password, repeatPassword, securityQuest, selectQuest)
             break;
 
-        case "usuário e senha válidos porém com um e-mail sem @dominio":
-            name = faker.name.firstName();
-            email = name
-            password = validPassword
-            Cadastro.fillRegisterForm(name, email, password)
+        case "usuário, senha e pergunta de segurança válidos porém com um e-mail sem @dominio":
+            email = faker.internet.userName()
+            password = validPassword;
+            repeatPassword = password;
+            securityQuest = faker.lorem.words();
+            Cadastro.fillRegisterForm(email, password, repeatPassword, securityQuest, selectQuest)
             break;
 
-        case "usuário e e-mail válidos porém com uma senha inválida":
-            name = faker.name.firstName();
+        case "e-mail, pergunta de segurança válidos porém com uma senha inválida":
             email = faker.internet.email();
-            password = '12345';
-            Cadastro.fillRegisterForm(name, email, password)
+            password = 'abcd';
+            repeatPassword = password
+            securityQuest = faker.lorem.words()
+            Cadastro.fillRegisterForm(email, password, repeatPassword, securityQuest, selectQuest)
             break;
 
-        case "e-mail e senha válidos porém com um usuário em branco":
+        case "e-mail, senha e pergunta de segurança válidos porém com uma confirmação de senha diferente":
             email = faker.internet.email();
             password = validPassword;
-            Cadastro.fillRegisterForm(name, email, password)
+            repeatPassword = faker.lorem.word();
+            securityQuest = faker.lorem.words();
+            Cadastro.fillRegisterForm(email, password, repeatPassword, securityQuest, selectQuest)
             break;
 
-        case "usuário e senha válidos porém com um e-mail em branco":
-            name = faker.name.firstName();
+        case "senha e pergunta de segurança válidos porém com um e-mail em branco":
             password = validPassword;
-            Cadastro.fillRegisterForm(name, email, password)
+            repeatPassword = password
+            securityQuest = faker.lorem.words()
+            Cadastro.fillRegisterForm(email, password, repeatPassword, securityQuest, selectQuest)
             break;
 
-        case "usuário e e-mail válidos porém com uma senha em branco":
-            name = faker.name.firstName();
+        case "e-mail, repetição de senha e pergunta de segurança válidos porém com uma senha em branco":
             email = faker.internet.email();
-            Cadastro.fillRegisterForm(name, email, password)
+            repeatPassword = validPassword;
+            securityQuest = faker.lorem.words();
+            Cadastro.fillRegisterForm(email, password, repeatPassword, securityQuest, selectQuest)
             break;
 
-        case "usuário, e-mail e senha em branco":
-            Cadastro.fillRegisterForm(name, email, password)
-            break;
-
-        case "usuário e senha válidos porém com um e-mail já cadastrado":
-            name = faker.name.firstName();
-            email = validEmail;
+        case "e-mail, senha e pergunta de segurança válidos porém com uma confirmação de senha em branco":
+            email = faker.internet.email();
             password = validPassword;
-            Cadastro.fillRegisterForm(name, email, password)
-            break;            
+            securityQuest = faker.lorem.words();
+            Cadastro.fillRegisterForm(email, password, repeatPassword, securityQuest, selectQuest)
+            break;
+
+        case "e-mail, senha e confirmação de senha e resposta de segurança válidos porém sem uma pergunta de segurança":
+            email = faker.internet.email();
+            password = validPassword;
+            repeatPassword = password;
+            securityQuest = faker.lorem.words();
+            Cadastro.fillRegisterForm(email, password, repeatPassword, securityQuest, selectQuest = false)
+            break;
+
+        // case "e-mail, senha e confirmação de senha válidos e pergunta de segurança validos":
+        //     email = faker.internet.email();
+        //     password = validPassword;
+        //     repeatPassword = password;
+        //     securityQuest = faker.lorem.words();
+        //     Cadastro.fillRegisterForm(email, password, repeatPassword, securityQuest)
+        //     break;
+
+        // case "e-mail, senha e confirmação de senha válidos e pergunta de segurança validos":
+        //     email = faker.internet.email();
+        //     password = validPassword;
+        //     repeatPassword = password;
+        //     securityQuest = faker.lorem.words();
+        //     Cadastro.fillRegisterForm(email, password, repeatPassword, securityQuest)
+        //     break;
 
         default:
             break;
     }
+})
+
+When('o usuário clica no campo {string} e não preenche nada', (type) => {
+    Cadastro.emptyField(type)
+})
+
+Then('o sistema deve realizar o cadastro e ir para a página de login', () => {
     Cadastro.clickRegister()
+    Cadastro.shouldRegister()
 })
 
-Then('o sistema deve exibir a mensagem {string} e realizar login automaticamente', (message) => {
-    Cadastro.shouldRegister(message)
-})
-
-Then('o sistema deve exibir a mensagem {string} e não realizar o cadastro', (error) => {
+Then('o sistema deve exibir a mensagem {string}, o botão de registrar deve estar desabilitado e não realizar o cadastro', (error) => {
     Cadastro.shouldNotRegister(error)
 })
 

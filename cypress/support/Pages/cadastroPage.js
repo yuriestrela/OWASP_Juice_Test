@@ -2,9 +2,10 @@ export class CadastroPage {
 
     visit() {
         cy.visit('/#/register')
+        cy.fecharModais()
     }
 
-    fillRegisterForm(email, password, securityQuest, repeatPassword) {
+    fillRegisterForm(email, password, repeatPassword, securityQuest, selectQuest) {
         if (email) {
             cy.get(pageObjects.inputEmail).type(email)
         }
@@ -14,10 +15,11 @@ export class CadastroPage {
         if (repeatPassword) {
             cy.get(pageObjects.inputConfirmPassword).type(repeatPassword)
         }
-        if (securityQuest) {
+        if (selectQuest) {
             cy.get(pageObjects.selectQuest).click()
-            cy.get(questionPanel).contains('Your favorite movie?').click()
-            
+            cy.get(pageObjects.questionPanel).contains('Your favorite movie?').click()
+        }
+        if (securityQuest) {
             cy.get(pageObjects.securityAnswer).type(securityQuest)
         }
     }
@@ -26,32 +28,46 @@ export class CadastroPage {
         cy.get(pageObjects.clickRegister).click()
     }
 
-    shouldRegister(message) {
-        cy.url().should('include', '/my-account');
-        cy.get(pageObjects.shouldRegister).contains(message).should('be.visible')
+    shouldRegister() {
+        cy.url().should('include', '/login');
+        cy.get(pageObjects.shouldRegister).should('be.visible')
     }
 
     shouldNotRegister(error) {
 
-        if (error.includes('nome')) {
-            cy.get(pageObjects.inputName)
-                .siblings('.errorLabel')
+        if (error.includes('email')) {
+            cy.get(pageObjects.matOptions)
+                .contains(error)
+                .should('contain', error)
+        } else if (error.includes('provide a password')) {
+            cy.get(pageObjects.matOptions)
+                .contains(error)
                 .should('contain', error)
 
-        } else if (error.includes('e-mail')) {
-            cy.get(pageObjects.inputEmail)
-                .siblings('.errorLabel')
+        } else if (error.includes('repeat') || error.includes('Passwords')) {
+            cy.get(pageObjects.matOptions)
+                .contains(error)
                 .should('contain', error)
 
-        } else if (error.includes('senha')) {
-            cy.get(pageObjects.inputPassword)
-                .siblings('.errorLabel')
+        } else if (error.includes('select a security')) {
+            cy.get(pageObjects.matOptions)
+                .contains(error)
+                .should('contain', error)
+        } else if (error.includes('answer')) {
+            cy.get(pageObjects.matOptions)
+                .contains(error)
                 .should('contain', error)
         }
 
-        cy.url().should('not.include', '/my-account');
+        cy.get(pageObjects.clickRegister).should('be.disabled')
+        cy.url().should('include', '/register');
+    }
 
-
+    emptyField(type) {
+        cy.get(pageObjects.fields)
+            .contains(`${type}`)
+            .click()
+        cy.get('body').click()
     }
 
     ValidateAllFields(nameError, emailError, passwordError) {
@@ -75,9 +91,11 @@ const pageObjects = {
     inputEmail: '#emailControl',
     inputPassword: '#passwordControl',
     inputConfirmPassword: '#repeatPasswordControl',
-    selectQuest: '#mat-select-value-2',
-    questionPanel: '#mat-select-2-panel',
+    selectQuest: '#mat-select-0',
+    questionPanel: '#mat-option-11',
     securityAnswer: '#securityAnswerControl',
     clickRegister: '#registerButton',
-    shouldRegister: 'div[class*="swal2-show"]'
+    shouldRegister: 'div[class*="bar-label mdc"]',
+    fields: 'div[class*="field--outlined"]',
+    matOptions: 'mat-error',
 };
