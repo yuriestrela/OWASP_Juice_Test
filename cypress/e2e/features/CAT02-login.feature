@@ -96,4 +96,3 @@ Cenário: CT001 - Login com sucesso
 #   Dado que o usuário realiza o logout clicando no botão "Logout"
 #   Quando o usuário clica no botão "Voltar"
 #   Então o sistema não deve realizar o login e deve redirecionar o usuário para a página de login
-
