@@ -1,9 +1,8 @@
 # language: pt
 Funcionalidade: Cadastro de usuário
-    Dado que o usuário está na página de cadastro
-    E o usuário clica no campo "Email" e não preenche nada
-    Quando o usuário preenche todos os campos obrigatórios com "senha e pergunta de segurança válidos porém com um e-mail em branco"
-    Então o sistema deve exibir a mensagem "Please provide an email address.", o botão de registrar deve estar desabilitado e não realizar o cadastro
+  Como um usuário do sistema
+  Eu quero realizar o cadastro
+  
 
   Cenário: CT001 - Cadastro com sucesso
     Dado que o usuário está na página de cadastro
