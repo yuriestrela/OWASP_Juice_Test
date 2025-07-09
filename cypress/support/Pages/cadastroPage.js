@@ -2,7 +2,6 @@ export class CadastroPage {
 
     visit() {
         cy.visit('/#/register')
-        cy.fecharModais()
     }
 
     fillRegisterForm(email, password, repeatPassword, securityQuest, selectQuest) {
