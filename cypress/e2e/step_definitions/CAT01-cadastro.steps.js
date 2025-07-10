@@ -155,7 +155,7 @@ Then('a barra de progresso deve estar em {string}', (progress) => {
     Cadastro.progressBar(progress)
 })
 
-When('o usuário clica no link "Already a customer?"', () => {
+When('o usuário clica no botão "Already a customer?"', () => {
     Cadastro.loginLinkClick()
 })
 

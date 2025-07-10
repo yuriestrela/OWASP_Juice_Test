@@ -5,7 +5,7 @@ export class LoginPage {
         cy.fecharModais()
     }
 
-    inputFillLogin(email, password) {
+    fillLoginForm(email, password) {
         if (email) {
             cy.get(pageObjects.inputEmail).type(email)
 
@@ -26,11 +26,25 @@ export class LoginPage {
         cy.get(pageObjects.clickLogin).click();
     }
 
+    clickEnterToLogin() {
+        cy.get(pageObjects.clickLogin).type('{enter}');
+
+    }
+
     interceptLogin() {
         cy.intercept('POST', 'rest/user/login').as('postLogin').then(() => {
             this.clickLogin()
         })
         cy.wait('@postLogin').then(({ response }) => {
+            expect(response.statusCode).to.eq(200)
+        })
+    }
+
+    interceptEnterLogin() {
+        cy.intercept('POST', 'rest/user/login').as('postEnterLogin').then(() => {
+            this.clickEnterToLogin()
+        })
+        cy.wait('@postEnterLogin').then(({ response }) => {
             expect(response.statusCode).to.eq(200)
         })
     }
@@ -77,7 +91,6 @@ export class LoginPage {
     }
 
 
-
     goBack() {
         cy.go('back');
         cy.go('back');
@@ -87,6 +100,61 @@ export class LoginPage {
         cy.url().should('not.include', '/#/search');
     }
 
+    linkClick(message) {
+        cy.contains(message).click({ force: true })
+    }
+
+
+    goToRecoveryPassword() {
+        cy.url().should('include', '/#/forgot-password')
+    }
+
+    goToRegister() {
+        cy.url().should('include', '/#/register')
+    }
+
+    showPassword() {
+        cy.get(pageObjects.showPasswordButton).click()
+    }
+
+    assertPasswordToggle(action) {
+        if (action.includes('exibir')) {
+            cy.get(pageObjects.inputPassword).should('have.attr', 'type', 'text')
+        }
+
+        if (action.includes('ocultar')) {
+            cy.get(pageObjects.inputPassword).should('have.attr', 'type', 'password')
+
+        }
+    }
+
+    rememberMe() {
+        cy.get(pageObjects.rememberMe).click()
+    }
+
+    assertRememberMeCheck(action) {
+        if (action === 'marcado') {
+            cy.get(pageObjects.rememberMe).should('be.checked')
+        } else if (action === 'desmarcado') {
+            cy.get(pageObjects.rememberMe).should('not.be.checked')
+        }
+    }
+
+    clickLogout() {
+        cy.get(pageObjects.acountMenu).click
+        cy.get(logoutButton).click()
+    }
+
+    shoulLogout() {
+        cy.url().should('not.include', '/#/search')
+        cy.url().should('include', '/#/login')
+    }
+
+    goBack() {
+        cy.go('back');
+        cy.go('back');
+    }
+
 }
 
 const pageObjects = {
@@ -94,5 +162,10 @@ const pageObjects = {
     inputPassword: '#password',
     clickLogin: '#loginButton',
     errorInvalidCredentials: 'div[class="error ng-star-inserted"]',
-    errorRequired: 'mat-error[id*="mat-mdc-error"]'
+    errorRequired: 'mat-error[id*="mat-mdc-error"]',
+    showPasswordButton: 'button[class*="icon-button mat-unthemed mat-mdc-button-base "]',
+    rememberMe: '#rememberMe-input',
+    loginButtonGoogle: '#loginButtonGoogle',
+    acountMenu: '#navbarAccount',
+    logoutButton: '#navbarLogoutButton'
 }

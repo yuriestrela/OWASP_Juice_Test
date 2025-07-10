@@ -1,8 +1,8 @@
 Cypress.Commands.add('fecharModais', () => {
-    cy.get('button[class*="close-dialog"]', { timeout: 2000 })
+    cy.get('button[class*="close-dialog"]', { timeout: 3000 })
         .click({ force: true })
 
-    cy.get('a[class*="cc-btn"]', { timeout: 1000 })
+    cy.get('a[class*="cc-btn"]', { timeout: 3000 })
         .click({ force: true })
 });
 
