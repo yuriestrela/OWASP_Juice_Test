@@ -111,7 +111,6 @@ When('o usuário clica no campo {string} e não preenche nada', (type) => {
 
 Then('o sistema deve realizar o cadastro e ir para a página de login', () => {
     Cadastro.interceptRegister()
-    // Cadastro.clickRegister()
     Cadastro.shouldRegister()
 })
 
