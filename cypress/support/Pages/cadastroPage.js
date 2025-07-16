@@ -2,6 +2,7 @@ export class CadastroPage {
 
     visit() {
         cy.visit('/#/register')
+        cy.fecharModais()
     }
 
     fillRegisterForm(email, password, repeatPassword, securityQuest, selectQuest) {
@@ -122,14 +123,14 @@ export class CadastroPage {
     }
 
     requireStatus(require) {
-        if (require.contains('verde')) {
+        if (require.includes('verde')) {
             cy.get(pageObjects.menuAdvices)
                 .contains('div', require)
                 .find('mat-icon')
                 .should('have.attr', 'fonticon', 'done')
                 .should('have.css', 'color', 'rgb(84, 110, 122)')
 
-        } else if (require.contains("vermelho")) {
+        } else if (require.includes("vermelho")) {
             cy.get(pageObjects.menuAdvices)
                 .contains('div', require)
                 .find('mat-icon')
@@ -145,7 +146,7 @@ export class CadastroPage {
     }
 
     loginLinkClick() {
-        cy.get(pageObjects.loginPage).click()
+    cy.get(pageObjects.loginPage).click({ force: true });
     }
 
     goToLogin(link) {

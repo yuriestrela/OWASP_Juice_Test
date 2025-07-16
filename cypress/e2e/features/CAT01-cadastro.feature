@@ -107,5 +107,5 @@ Funcionalidade: Cadastro de usuário
 
   Cenário: CT015 - Acessar a página de login a partir da página de cadastro
     Dado que o usuário está na página de cadastro
-    Quando o usuário clica no link "Already a customer?"
+    Quando o usuário clica no botão "Already a customer?"
     Então o sistema deve redirecionar para a página de login
