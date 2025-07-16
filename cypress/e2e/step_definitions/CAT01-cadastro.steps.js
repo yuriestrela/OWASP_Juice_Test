@@ -18,10 +18,11 @@ When('o usuário preenche todos os campos obrigatórios com {string}', (type) =>
     switch (type) {
         case "e-mail, senha e confirmação de senha válidos e pergunta de segurança validos":
             email = faker.internet.email();
-            password = validPassword;
+            password = faker.internet.password();
             repeatPassword = password;
             securityQuest = faker.lorem.words();
             Cadastro.fillRegisterForm(email, password, repeatPassword, securityQuest, selectQuest)
+            Cadastro.saveUser(email, password)
             break;
 
         case "e-mail, senha e pergunta de segurança válidos porém com um e-mail sem @dominio":

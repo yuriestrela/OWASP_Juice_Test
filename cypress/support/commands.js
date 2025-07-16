@@ -1,10 +1,29 @@
 Cypress.Commands.add('fecharModais', () => {
-    cy.get('button[class*="close-dialog"]', { timeout: 3000 })
-        .click({ force: true })
+  // Fecha modal se existir
+  cy.get('button[class*="close-dialog"]', { timeout: 5000 })
+    .then(($btn) => {
+      if ($btn.length > 0 && $btn.is(':visible')) {
+        cy.wrap($btn).click({ force: true })
+      }
+    })
 
-    cy.get('a[class*="cc-btn"]', { timeout: 3000 })
-        .click({ force: true })
-});
+  // Fecha aviso de cookies se existir
+  cy.get('a[class*="cc-btn"]', { timeout: 5000 })
+    .then(($btn) => {
+      if ($btn.length > 0 && $btn.is(':visible')) {
+        cy.wrap($btn).click({ force: true })
+      }
+    })
+})
+
+
+Cypress.Commands.add('saveUserToFixture', (user) => {
+    cy.writeFile('cypress/fixtures/user.json', user)
+})
+
+Cypress.Commands.add('getUserFromFixture', () => {
+    return cy.readFile('cypress/fixtures/user.json')
+})
 
 Cypress.Commands.add('createUser', (email) => {
     cy.request({

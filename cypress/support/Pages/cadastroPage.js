@@ -28,6 +28,13 @@ export class CadastroPage {
         cy.get(pageObjects.clickRegister).click()
     }
 
+    saveUser(email, password) {
+        cy.saveUserToFixture({
+            email,
+            password
+        })
+    }
+
     interceptRegister() {
         cy.intercept('POST', '/api/Users/').as('postCadastro').then(() => {
             cy.get(pageObjects.clickRegister).click()
@@ -135,7 +142,7 @@ export class CadastroPage {
                 .contains('div', require)
                 .find('mat-icon')
                 .should('have.attr', 'fonticon', 'error')
-                .should('have.css', 'color', 'rgb(255, 87, 34)')          
+                .should('have.css', 'color', 'rgb(255, 87, 34)')
         }
 
     }
@@ -146,11 +153,11 @@ export class CadastroPage {
     }
 
     loginLinkClick() {
-    cy.get(pageObjects.loginPage).click({ force: true });
+        cy.get(pageObjects.loginPage).click({ force: true });
     }
 
     goToLogin(link) {
-        cy.url().should('include', '/login');       
+        cy.url().should('include', '/login');
     }
 
 

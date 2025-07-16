@@ -14,9 +14,9 @@ When('o usuário preenche os campos obrigatórios com {string}', (type) => {
     let password;
     switch (type) {
         case "e-mail e senha válidos":
-            email = validEmail;
-            password = validPassword;
-            Login.fillLoginForm(email, password);
+            Login.getUser().then((user) => {
+                Login.fillLoginForm(user.email, user.password)
+            })
             break;
 
         case "Email e senha porém com um e-mail inválido":
