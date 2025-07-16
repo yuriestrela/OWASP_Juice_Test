@@ -94,11 +94,15 @@ When('o usuário preenche todos os campos obrigatórios com {string}', (type) =>
             break;
 
         case "e-mail, senha e confirmação de senha válidos e pergunta de segurança válidos porém com um e-mail já cadastrado":
-            email = validEmail;
-            password = validPassword;
-            repeatPassword = password;
-            securityQuest = faker.lorem.words();
-            Cadastro.fillRegisterForm(email, password, repeatPassword, securityQuest, selectQuest)
+            Cadastro.getUser().then((user) => {
+                const email = user.email;
+                const password = user.password;
+                const repeatPassword = password;
+                const securityQuest = faker.lorem.words();
+                const selectQuest = true;
+
+                Cadastro.fillRegisterForm(email, password, repeatPassword, securityQuest, selectQuest);
+            });
             break;
 
         default:

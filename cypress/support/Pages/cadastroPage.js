@@ -34,6 +34,9 @@ export class CadastroPage {
             password
         })
     }
+    getUser() {
+        return cy.readFile('cypress/fixtures/user.json');
+    }
 
     interceptRegister() {
         cy.intercept('POST', '/api/Users/').as('postCadastro').then(() => {
