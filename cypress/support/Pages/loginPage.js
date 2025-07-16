@@ -142,7 +142,7 @@ export class LoginPage {
 
     clickLogout() {
         cy.get(pageObjects.acountMenu).click
-        cy.get(logoutButton).click()
+        cy.get(pageObjects.logoutButton).click()
     }
 
     shoulLogout() {

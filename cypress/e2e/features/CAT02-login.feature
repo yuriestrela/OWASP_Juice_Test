@@ -5,6 +5,11 @@ Funcionalidade: Login de usuário e Logout
   Eu quero realizar o login e logout
   Para acessar as funcionalidades do sistema
 
+  Cenário: CT000 - Certificação de que o usuário válido está cadastrado (Site não salva o cadastro por mais de 1 dia)
+    Dado que o usuário está na página de cadastro
+    Quando o usuário preenche todos os campos obrigatórios com "e-mail, senha e confirmação de senha válidos e pergunta de segurança válidos porém com um e-mail já cadastrado"
+    Então o sistema deve realizar o cadastro e ir para a página de login  
+
   Cenário: CT001 - Login com sucesso
     Dado que o usuário está na página de login
     Quando o usuário preenche os campos obrigatórios com "e-mail e senha válidos"
