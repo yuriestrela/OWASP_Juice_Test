@@ -10,7 +10,10 @@ Funcionalidade: Carrinho de compras
 #     Quando o usuário preenche todos os campos obrigatórios com "e-mail, senha e confirmação de senha válidos e pergunta de segurança válidos porém com um e-mail já cadastrado"
 
   Cenário: CT001 - Adicionar produto ao carrinho com sucesso
-    Dado que o usuário está na página de login
+    Dado que o usuário está na página de cadastro
+    Quando o usuário preenche todos os campos obrigatórios com "e-mail, senha e confirmação de senha válidos e pergunta de segurança validos"
+    Então o sistema deve realizar o cadastro e ir para a página de login
+    # Dado que o usuário está na página de login
     Quando o usuário preenche os campos obrigatórios com "e-mail e senha válidos"
     Então o sistema deve realizar o login e ir para a página inicial
     # Alterar para fazer login via API depois

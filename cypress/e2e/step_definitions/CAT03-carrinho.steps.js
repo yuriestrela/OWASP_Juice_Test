@@ -16,6 +16,5 @@ When('o usuário navega para a página do carrinho', () => {
 
 Then('o sistema deve realizar o envio do produto {string} para o carrinho', (product) => {
     Carrinho.ShouldAddToBasket(product)
-    Carrinho.interceptAddToBasket()
     // Quero validar se o status code está correto e se o nome no body corresponde com "product"
 })

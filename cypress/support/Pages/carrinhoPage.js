@@ -7,24 +7,25 @@ export class CarrinhoPage {
     }
 
     addToBasket(product) {
+        cy.intercept('POST', '/api/BasketItems/**').as('addToCart')
+
         cy.get(pageObjects.productCard)
             .contains(product)
             .parents(pageObjects.productCard)
             .within(() => {
                 cy.get(pageObjects.addToBasketButton).click()
             })
+
+        cy.wait('@addToCart').then(({ request, response }) => {
+            expect(response.statusCode).to.eq(200)
+        })
+
     }
-
-
 
     viewBasket() {
         cy.get(pageObjects.basket).click()
     }
 
-
-    interceptAddToBasket() {
-
-    }
 
     ShouldAddToBasket(product) {
         this.viewBasket()
@@ -36,5 +37,5 @@ const pageObjects = {
     productCard: 'mat-card[class*="mat-mdc"]',
     addToBasketButton: 'button[aria-label="Add to Basket"]',
     basket: 'button[class*="unthemed mat-mdc-button-base n"]',
-    basketItems: ''
+    basketItems: 'mat-table[class*="data-table"]'
 }
