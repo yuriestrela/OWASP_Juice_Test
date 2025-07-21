@@ -8,12 +8,12 @@ Funcionalidade: Carrinho de compras
 
 
   Cenário: CT001 - Adicionar produto ao carrinho com sucesso
-  #   Dado que o usuário está na página de cadastro
-  #   Quando o usuário preenche todos os campos obrigatórios com "e-mail, senha e confirmação de senha válidos e pergunta de segurança validos"
-  #   Então o sistema deve realizar o cadastro e ir para a página de login
-  #   Quando o usuário preenche os campos obrigatórios com "e-mail e senha válidos"
-  #   Então o sistema deve realizar o login e ir para a página inicial
-  #   # Alterar para fazer cadastro e login via API depois
+    Dado que o usuário está na página de cadastro
+    Quando o usuário preenche todos os campos obrigatórios com "e-mail, senha e confirmação de senha válidos e pergunta de segurança validos"
+    Então o sistema deve realizar o cadastro e ir para a página de login
+    Quando o usuário preenche os campos obrigatórios com "e-mail e senha válidos"
+    Então o sistema deve realizar o login e ir para a página inicial
+    # Alterar para fazer cadastro e login via API depois
 
     Dado que o usuário está na página de um produto
     E o usuário clica no botão "Add to Basket" o produto "<Produto>"
@@ -30,10 +30,10 @@ Funcionalidade: Carrinho de compras
     Quando o usuário navega para a página do carrinho
     Então o carrinho deve estar vazio
 
-#   Cenário: CT003 - Remover produto do carrinho
-#     Dado que o usuário está na página do carrinho com produtos adicionados
-#     Quando o usuário clica no botão "Remover" de um produto
-#     Então o sistema deve exibir a mensagem "Produto removido do carrinho." e o produto não deve mais estar presente no carrinho
+  Cenário: CT003 - Remover produto do carrinho
+    Dado que o usuário está na página do carrinho com produtos adicionados
+    Quando o usuário clica no botão "Remover" de um produto
+    Então o sistema deve exibir a mensagem "Produto removido do carrinho." e o produto não deve mais estar presente no carrinho
 
 #   Cenário: CT004 - Atualizar quantidade de produtos no carrinho
 #     Dado que o usuário está na página do carrinho com produtos adicionados

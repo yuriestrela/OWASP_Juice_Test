@@ -104,6 +104,9 @@ Cypress.Commands.add('registerLoginAndVisitCart', () => {
           win.localStorage.setItem('token', token)
         }
       })
+
+      cy.reload()
+      cy.visit('/#/basket')
     })
   })
 })
