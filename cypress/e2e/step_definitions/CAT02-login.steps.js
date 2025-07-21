@@ -9,6 +9,10 @@ Given('que o usuário está na página de login', () => {
     Login.visit()
 })
 
+Given('que o usuário está cadastrado no sistema', () =>{
+    Login.registerByApi()
+})
+
 When('o usuário preenche os campos obrigatórios com {string}', (type) => {
     let email;
     let password;

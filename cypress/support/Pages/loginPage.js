@@ -6,6 +6,7 @@ export class LoginPage {
     
 }
 
+
 fillLoginForm(email, password) {
     if (email) {
         cy.get(pageObjects.inputEmail).type(email)
@@ -16,10 +17,14 @@ fillLoginForm(email, password) {
     }
 }
 
+registerByApi() {
+        cy.createUserApi()
+
+}
+
 getUser() {
     return cy.readFile('cypress/fixtures/user.json')
 }
-
 
 
 emptyField(type) {
