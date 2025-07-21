@@ -5,6 +5,14 @@ const addCucumberPreprocessorPlugin = require("@badeball/cypress-cucumber-prepro
 const createCucumberPreprocessorPlugin = require("@badeball/cypress-cucumber-preprocessor");
 
 module.exports = defineConfig({
+  reporter: 'mochawesome',
+  reporterOptions: {
+    reportDir: 'cypress/reports/mochawesome',
+    overwrite: false,
+    html: true,
+    json: true
+  },
+
   e2e: {
     async setupNodeEvents(on, config) {
       await addCucumberPreprocessorPlugin(on, config);
@@ -14,7 +22,7 @@ module.exports = defineConfig({
       return config;
     },
     baseUrl: "https://juice-shop.herokuapp.com/",
-    specPattern: "cypress/e2e/features/*.feature",
+    specPattern: "cypress/e2e/**/*.feature",
     stepDefinitions: "cypress/e2e/step_definitions/**/*.{js,ts}"
   }
 });

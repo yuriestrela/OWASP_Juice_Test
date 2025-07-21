@@ -15,3 +15,10 @@ jobs:
       
       - name: Executando testes Cypress
         uses: cypress-io/github-action@v6
+ 
+      - name: Subindo relatórios de teste
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-reports-html
+          path: cypress/reports/html
